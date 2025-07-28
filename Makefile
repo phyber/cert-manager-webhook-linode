@@ -1,7 +1,7 @@
-IMAGE_NAME := "slicen/cert-manager-webhook-linode"
+IMAGE_NAME := "phyber/cert-manager-webhook-linode"
 IMAGE_TAG := "v0.3.0"
 
-K8S_VERSION := "1.28.0"
+K8S_VERSION := "1.32.0"
 
 OUT := $(shell pwd)/_out
 
