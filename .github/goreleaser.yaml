@@ -1,0 +1,55 @@
+---
+name: "GoReleaser"
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch: {}
+
+permissions:
+  contents: "write"  # Create a release
+  packages: "write"  # Publish packages
+
+jobs:
+  goreleaser:
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v4"
+        with:
+          fetch-depth: 0
+
+      - name: "Setup Zig"
+        uses: "mlugg/setup-zig@v2"
+
+      - name: "Setup QEMU"
+        uses: "docker/setup-qemu-action@v3"
+
+      - name: "Setup Docker buildx"
+        uses: "docker/setup-buildx-action@v3"
+
+      # Login to DockerHub to help with throttling of image pulls. This token
+      # is Read-Only.
+      - name: "DockerHub Registry Login"
+        uses: "docker/login-action@v3"
+        with:
+          password: "${{ secrets.DOCKER_HUB_TOKEN }}"
+          username: "${{ secrets.DOCKER_HUB_USERNAME }}"
+
+      # Login for pushing the image to GitHub.
+      - name: "GitHub Registry Login"
+        uses: "docker/login-action@v3"
+        with:
+          password: "${{ secrets.GITHUB_TOKEN }}"
+          registry: "ghcr.io"
+          username: "${{ github.actor }}"
+
+      - name: "GoReleaser"
+        uses: "goreleaser/goreleaser-action@v6"
+        with:
+          args: "release --clean"
+          distribution: "goreleaser"
+          version: "~> 2"
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
