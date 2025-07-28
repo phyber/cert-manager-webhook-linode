@@ -31,11 +31,11 @@ jobs:
 
       # Login to DockerHub to help with throttling of image pulls. This token
       # is Read-Only.
-      - name: "DockerHub Registry Login"
-        uses: "docker/login-action@v3"
-        with:
-          password: "${{ secrets.DOCKER_HUB_TOKEN }}"
-          username: "${{ secrets.DOCKER_HUB_USERNAME }}"
+      #- name: "DockerHub Registry Login"
+      #  uses: "docker/login-action@v3"
+      #  with:
+      #    password: "${{ secrets.DOCKER_HUB_TOKEN }}"
+      #    username: "${{ secrets.DOCKER_HUB_USERNAME }}"
 
       # Login for pushing the image to GitHub.
       - name: "GitHub Registry Login"
