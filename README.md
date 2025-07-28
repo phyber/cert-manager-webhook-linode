@@ -8,6 +8,16 @@ A webhook to use [Linode DNS
 Manager](https://www.linode.com/docs/platform/manager/dns-manager) as a DNS01
 ACME Issuer for [cert-manager](https://github.com/jetstack/cert-manager).
 
+## NOTICE
+
+This is a fork of Linode's fork of this Cert Manager webhook in order to build
+an `arm64` container of the webhook, which Linode currently does not build.
+They also do not have Issues enabled on GitHub to report this issue.
+
+You almost certainly do not want to rely on this repository if you want an
+`arm64` image, and are instead encourage to fork and build your own container
+image.
+
 ## Installation
 
 ```bash
